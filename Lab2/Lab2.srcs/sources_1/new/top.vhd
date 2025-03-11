@@ -21,6 +21,8 @@
 
 library IEEE;
 use IEEE.STD_LOGIC_1164.ALL;
+use IEEE.STD_LOGIC_ARITH.ALL;
+use IEEE.STD_LOGIC_UNSIGNED.ALL;
 
 -- Uncomment the following library declaration if using
 -- arithmetic functions with Signed or Unsigned values
@@ -43,7 +45,22 @@ end top;
 
 architecture Behavioral of top is
 
+signal b: STD_LOGIC_VECTOR(2 downto 0);
+
+
 begin
+process(clk_i, rst_i,b)
+begin
+if(rst_i='1') then b<="000";
+    elsif(rising_edge(clk_i))then
+        b<=b+1;
+end if;
 
 
+led_o(2)<=b(2);
+led_o(1)<=b(1) xor b(2);
+led_o(0)<=b(1) xor b(0);
+
+
+end process;
 end Behavioral;
